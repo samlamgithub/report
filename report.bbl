@@ -1,0 +1,17 @@
+\begin{thebibliography}{1}
+
+\bibitem{whelan2015elasticfusion}
+Thomas Whelan, Stefan Leutenegger, Renato~F Salas-Moreno, Ben Glocker, and
+  Andrew~J Davison.
+\newblock Elasticfusion: Dense slam without a pose graph.
+\newblock {\em Proc. Robotics: Science and Systems, Rome, Italy}, 2015.
+
+\bibitem{leutenegger2015keyframe}
+Stefan Leutenegger, Simon Lynen, Michael Bosse, Roland Siegwart, and Paul
+  Furgale.
+\newblock Keyframe-based visual--inertial odometry using nonlinear
+  optimization.
+\newblock {\em The International Journal of Robotics Research}, 34(3):314--334,
+  2015.
+
+\end{thebibliography}
