@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.10.26)  18 JAN 2017 15:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.10.26)  23 JAN 2017 14:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1237,13 +1237,25 @@ Package: ntheorem 2011/08/15 1.33
 \c@definition=\count164
 \c@proof=\count165
 \c@elimination@steps=\count166
-) (./notation.tex) (./report.aux)
+) (./notation.tex) (./report.aux
+
+LaTeX Warning: Label `fig:kinec' multiply defined.
+
+
+LaTeX Warning: Label `fig:kinec' multiply defined.
+
+
+LaTeX Warning: Label `fig:kinec' multiply defined.
+
+
+LaTeX Warning: Label `fig:kinec' multiply defined.
+
+)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/jkp/m/it on input line 14.
 LaTeX Font Info:    Try loading font information for OML+jkp on input line 14.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/omljkp.fd
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/omljkp.fd
 File: omljkp.fd 2006/08/15 v1.0
 )
 LaTeX Font Info:    ... okay on input line 14.
@@ -1361,7 +1373,7 @@ LaTeX Info: Redefining \nameref on input line 14.
 \openout6 = `report.out'.
 
  (./titlepage.tex
-<./figures/imperial.pdf, id=23, 362.35374pt x 96.36pt>
+<./figures/imperial.pdf, id=51, 362.35374pt x 96.36pt>
 File: ./figures/imperial.pdf Graphic file (type pdf)
 
 <use ./figures/imperial.pdf>
@@ -1376,21 +1388,182 @@ Underfull \hbox (badness 10000) in paragraph at lines 11--12
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./figur
 es/imperial.pdf>])
+LaTeX Font Info:    Try loading font information for OT1+jkp on input line 24.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/ot1jkp.fd
+File: ot1jkp.fd 2007/08/30 Fontinst v1.928 font definitions for OT1/jkp.
+)
+LaTeX Font Info:    Try loading font information for U+jkpmia on input line 24.
+
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/ujkpmia.fd
+File: ujkpmia.fd 2006/08/15 v1.0
+)
+LaTeX Font Info:    Try loading font information for U+jkpsya on input line 24.
+
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/ujkpsya.fd
+File: ujkpsya.fd 2006/08/15 v1.0
+)
+LaTeX Font Info:    Try loading font information for U+jkpsyb on input line 24.
+
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/ujkpsyb.fd
+File: ujkpsyb.fd 2006/08/15 v1.0
+)
+LaTeX Font Info:    Try loading font information for U+jkpsyc on input line 24.
+
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/ujkpsyc.fd
+File: ujkpsyc.fd 2006/08/15 v1.0
+)
+LaTeX Font Info:    Try loading font information for U+lasy on input line 24.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+Underfull \hbox (badness 10000) in paragraph at lines 24--26
+
+ []
+
+LaTeX Font Info:    Try loading font information for OT1+jkpss on input line 30
+.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/ot1jkpss.fd
+File: ot1jkpss.fd 2007/07/16 Fontinst v1.928 font definitions for OT1/jkpss.
+) [2]
+<figures/slamStructure.jpeg, id=101, 1832.8475pt x 672.5125pt>
+File: figures/slamStructure.jpeg Graphic file (type jpg)
+
+<use figures/slamStructure.jpeg>
+Package pdftex.def Info: figures/slamStructure.jpeg used on input line 39.
+(pdftex.def)             Requested size: 306.71924pt x 112.54007pt.
+
+<figures/factorgraph.jpeg, id=106, 1013.7875pt x 644.4075pt>
+File: figures/factorgraph.jpeg Graphic file (type jpg)
+
+<use figures/factorgraph.jpeg>
+Package pdftex.def Info: figures/factorgraph.jpeg used on input line 52.
+(pdftex.def)             Requested size: 306.71924pt x 194.956pt.
+
+
+Package natbib Warning: Citation `mourikis2007multi' on page 3 undefined on inp
+ut line 65.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--74
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--74
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--74
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--74
+
+ []
+
+[3 <./figures/slamStructure.jpeg>] [4 <./figures/factorgraph.jpeg>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5]
+<figures/kinec.jpeg, id=132, 1027.84pt x 479.7925pt>
+File: figures/kinec.jpeg Graphic file (type jpg)
+ <use figures/kinec.jpeg>
+Package pdftex.def Info: figures/kinec.jpeg used on input line 82.
+(pdftex.def)             Requested size: 306.71924pt x 143.17746pt.
+
+[6 <./figures/kinec.jpeg>]
+Missing character: There is no â in font bchr7t!
+Missing character: There is no € in font bchr7t!
+Missing character: There is no ” in font bchr7t!
+ [7]
+Missing character: There is no â in font bchr7t!
+Missing character: There is no € in font bchr7t!
+Missing character: There is no ˜ in font bchr7t!
 Missing character: There is no â in font bchr7t!
 Missing character: There is no € in font bchr7t!
 Missing character: There is no ™ in font bchr7t!
 
-Underfull \hbox (badness 10000) in paragraph at lines 28--29
+<figures/okvis.jpeg, id=150, 969.6225pt x 353.32pt>
+File: figures/okvis.jpeg Graphic file (type jpg)
+ <use figures/okvis.jpeg>
+Package pdftex.def Info: figures/okvis.jpeg used on input line 154.
+(pdftex.def)             Requested size: 306.71924pt x 111.76543pt.
+
+<figures/okvis1.jpeg, id=153, 891.33pt x 423.5825pt>
+File: figures/okvis1.jpeg Graphic file (type jpg)
+ <use figures/okvis1.jpeg>
+Package pdftex.def Info: figures/okvis1.jpeg used on input line 161.
+(pdftex.def)             Requested size: 306.71924pt x 145.76125pt.
+
+<figures/okvis2.png, id=156, 492.84125pt x 191.71625pt>
+File: figures/okvis2.png Graphic file (type png)
+
+<use figures/okvis2.png>
+Package pdftex.def Info: figures/okvis2.png used on input line 168.
+(pdftex.def)             Requested size: 306.71924pt x 119.3192pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<figures/okvis3.png, id=160, 496.85625pt x 208.78pt>
+File: figures/okvis3.png Graphic file (type png)
+ <use figures/okvis3.png>
+Package pdftex.def Info: figures/okvis3.png used on input line 175.
+(pdftex.def)             Requested size: 306.71924pt x 128.88474pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Missing character: There is no â in font bchr7t!
+Missing character: There is no € in font bchr7t!
+Missing character: There is no ” in font bchr7t!
+[8 <./figures/okvis.jpeg> <./figures/okvis1.jpeg>] [9 <./figures/okvis2.png> <.
+/figures/okvis3.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 30--31
+Underfull \hbox (badness 10000) in paragraph at lines 237--238
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 32--39
+Underfull \hbox (badness 10000) in paragraph at lines 239--240
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
+
+ []
+
+Missing character: There is no â in font bchr7t!
+Missing character: There is no € in font bchr7t!
+Missing character: There is no ™ in font bchr7t!
+Missing character: There is no â in font bchr7t!
+Missing character: There is no € in font bchr7t!
+Missing character: There is no ™ in font bchr7t!
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--259
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 261--266
 
  []
 
@@ -1399,43 +1572,53 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--39
 \openout7 = `report.brf'.
 
 )
+
+Package natbib Warning: There were undefined citations.
+
 \tf@thm=\write8
 \openout8 = `report.thm'.
 
-LaTeX Font Info:    Try loading font information for OT1+jkpss on input line 50
-.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/kpfonts/ot1jkpss.fd
-File: ot1jkpss.fd 2007/07/16 Fontinst v1.928 font definitions for OT1/jkpss.
-) [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 50.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 50.
-
-(./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 50.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 50.
+[11]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 270.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 270.
+ (./report.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 270.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 270.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: B6B533440F88B050DB7C5F9C1A515D3A;252.
-Package rerunfilecheck Info: File `report.brf' has not changed.
-(rerunfilecheck)             Checksum: 3E7521CC9F25698430114FA22182192C;110.
+(rerunfilecheck)             Checksum: D3574CC0260B6C4622371242479A2A84;776.
+
+
+Package rerunfilecheck Warning: File `report.brf' has changed.
+(rerunfilecheck)                Rerun to get bibliographical references right.
+
+Package rerunfilecheck Info: Checksums for `report.brf':
+(rerunfilecheck)             Before: 311F6129F431FC763872D7924AC0E2A6;1448
+(rerunfilecheck)             After:  E4774C97EFF184664CACDA1F54EAD074;1448.
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 22866 strings out of 493014
- 420019 string characters out of 6133350
- 486700 words of memory out of 5000000
- 25932 multiletter control sequences out of 15000+600000
- 27903 words of font info for 41 fonts, out of 8000000 for 9000
+ 23142 strings out of 493014
+ 424670 string characters out of 6133350
+ 494790 words of memory out of 5000000
+ 26128 multiletter control sequences out of 15000+600000
+ 62568 words of font info for 117 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,11n,73p,917b,372s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 64i,12n,77p,1584b,448s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2016/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/local/texl
 ive/2016/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/local/texlive
 /2016/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/local/texlive/20
-16/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb>
-Output written on report.pdf (2 pages, 58181 bytes).
+16/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb></usr/local/texlive/2016
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2016/
+texmf-dist/fonts/type1/public/kpfonts/jkpmi.pfb></usr/local/texlive/2016/texmf-
+dist/fonts/type1/public/kpfonts/jkpmn8a.pfb></usr/local/texlive/2016/texmf-dist
+/fonts/type1/public/kpfonts/jkpsy.pfb>
+Output written on report.pdf (11 pages, 892206 bytes).
 PDF statistics:
- 88 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
- 10 named destinations out of 1000 (max. 500000)
- 50 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 236 PDF objects out of 1000 (max. 8388607)
+ 184 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 141 words of extra memory for PDF output out of 10000 (max. 10000000)
 

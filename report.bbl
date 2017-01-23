@@ -14,4 +14,26 @@ Stefan Leutenegger, Simon Lynen, Michael Bosse, Roland Siegwart, and Paul
 \newblock {\em The International Journal of Robotics Research}, 34(3):314--334,
   2015.
 
+\bibitem{glocker2015real}
+Ben Glocker, Jamie Shotton, Antonio Criminisi, and Shahram Izadi.
+\newblock Real-time rgb-d camera relocalization via randomized ferns for
+  keyframe encoding.
+\newblock {\em IEEE transactions on visualization and computer graphics},
+  21(5):571--583, 2015.
+
+\bibitem{newcombe2011kinectfusion}
+Richard~A Newcombe, Shahram Izadi, Otmar Hilliges, David Molyneaux, David Kim,
+  Andrew~J Davison, Pushmeet Kohi, Jamie Shotton, Steve Hodges, and Andrew
+  Fitzgibbon.
+\newblock Kinectfusion: Real-time dense surface mapping and tracking.
+\newblock In {\em Mixed and augmented reality (ISMAR), 2011 10th IEEE
+  international symposium on}, pages 127--136. IEEE, 2011.
+
+\bibitem{cadena2016past}
+Cesar Cadena, Luca Carlone, Henry Carrillo, Yasir Latif, Davide Scaramuzza,
+  Jos{\'e} Neira, Ian Reid, and John~J Leonard.
+\newblock Past, present, and future of simultaneous localization and mapping:
+  Toward the robust-perception age.
+\newblock {\em IEEE Transactions on Robotics}, 32(6):1309--1332, 2016.
+
 \end{thebibliography}
