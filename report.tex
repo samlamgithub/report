@@ -85,172 +85,176 @@ from raw depth map to rendered view of 3D scenem\cite{newcombe2011kinectfusion}}
     \label{fig:kinec}
 \end{figure}
 \\The structure of KinecFusion is given in Fig \ref{fig:kinec} from original paper. The result of ICP is a transformation matrix from previous camera pose to the current pose, which is later used for converting the coordinates of current vertexes into the global coordinate frame. These coordinate data is then fused into the current model that uses a volumetric representation, as mentioned before. The 3D space is uniform divided into fixed size voxel grid. The geometry of surface is implicitly stores in these voxels by having zero values of Truncated Signed Distance Functions (TSDFs) at the surface, positive value in the front of surface, and negative at the back of it. Also, to improve efficiency and minimise storage usage only a truncated area around the surface is actually stored, thus the name "truncated".\\
-When integrating the current vertexes into voxel grid, each voxel is perspective projected back onto the image to calculate the difference between it and the measurement depth of this coordinate. The distance difference is then normalized to maximum TSDF distance and updated using weighted average with   previous value. Similar to the implementation of tracking stage, the integration and update process also make use of GPU parallel processing, each thread is assigned a slice of of grid along the $Z-axis$, and sweep through each voxel by its $(x,y)$ position for processing.\\
+When integrating the current vertexes into voxel grid, each voxel is perspective projected back onto the image to calculate the difference between it and the measurement depth of this coordinate. The distance difference is then normalized to maximum TSDF distance and updated using weighted average with   previous value. Similar to the implementation of tracking stage, the integration and update process also make use of GPU parallel processing, each thread is assigned a slice of of grid along the $Z-axis$, and sweep through each voxel by its $(x,y)$ position for processing, as shown in Fig \ref{fig:kin}.\\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/kin}
+    \caption{Volumetric Integration using GPU thread \cite{1_yin_2016}}
+    \label{fig:kin}
+\end{figure}\\
 Finally, in order to render the 3D reconstructed surface raycasting is performed. This is done by having each GPU thread to follow a ray from the camera center along one pixel in the image into the voxel grid in camera coordinate space, the ray is extended until a zero-crossing voxel is met, this voxel represents the surface point observed by this pixel and the position is extracted by doing a trilinear interpolation on this voxel point. And the normal at this position is calculated by find the surface gradent of TSDF values around the position. With these information for each pixel, a live 3D reconstruction view from camera view point can be rendered using camera's pose and intrinsic information.
 
 
 \subsubsection{Keyframe-Based Visual-Inertial SLAM Using
 Nonlinear Optimization}
-Other than using depth sensor with RGB camera, another kind of sensor equipped on the Google Tango table is Inertial Measurement Unit (IMU). Okvis\cite{leutenegger2015keyframe} is a sparse feature-based SLAM approach that tightly coupled IMU measurement with visual measurement using non linear optimization.
-Usually in optimization-based visual SLAM
-
-
-In visual SLAM, a nonlinear optimization is formulated to
-find the camera poses and landmark positions by minimizing
-the reprojection error of landmarks observed in camera
-frames. Figure 2 shows the respective graph representation :
-it displays measurements as edges with square boxes and
-estimated quantities as round nodes. As soon as inertial
-measurements are introduced, they not only create temporal
-constraints between successive poses, but also between successive
-speed and IMU bias estimates of both accelerometers
-and gyroscopes by which the robot state vector is augmented.
-In this section, we present our approach of incorporating
-inertial measurements into batch visual SLAM.
-
-
-Keypoint Matching and Keyframe Selection
-Our processing pipeline employs a customized multiscale
-SSE-optimized Harris corner detector combined with
-BRISK descriptor extraction [12]. The detector enforces
-uniform keypoint distribution in the image by gradually
-suppressing corners with weaker score as they are detected
-at a small distance to a stronger corner. Descriptors are
-extracted oriented along the gravity direction (projected into
-the image) which is observable thanks to tight IMU fusion.
-Initially, keypoints are stereo-triangulated and inserted
-into a local map. We perform brute-force matching against
-all of the map landmarks; outlier rejection is simply performed
-by applying a chi-square test in image coordinates
-by using the (uncertain) pose predictions obtained by IMUintegration.
-There is no costly RANSAC step involved—
-another advantage of tight IMU involvement. For the sub-
-
-
-we distinguish two
-kinds of frames: we introduce a temporal window of the S
-most recent frames including the current frame; and we use a
-number of N keyframes that may have been taken far in the
-past. For keyframe selection, we use a simple heuristic: if
-the ratio between the image area spanned by matched points
-versus the area spanned by all detected points falls below
-50 to 60%, the frame is labeled keyframe.
-
-
-tightly integrate visual measurements with readings from an
-Inertial Measurement Unit (IMU) in SLAM. An IMU error
-term is integrated with the landmark reprojection error in a
-fully probabilistic manner, resulting to a joint non-linear cost
-function to be optimized. Employing the powerful concept of
-‘keyframes’ we partially marginalize old states to maintain a
-bounded-sized optimization window, ensuring real-time operation.
-Comparing against both vision-only and loosely-coupled
-visual-inertial algorithms, our experiments confirm the benefits
-of tight fusion in terms of accuracy and robustness.
-
-
+Other than using depth sensor with RGB camera, another kind of sensor equipped on the Google Tango table is Inertial Measurement Unit (IMU). Okvis\cite{leutenegger2015keyframe} is a sparse feature-based SLAM approach that tightly coupled IMU measurement with stereo visual measurement using nonlinear optimization.\\
+Usually in optimization-based visual SLAM, the structure of geometry is to relate camera poses using landmarks, and optimization is performed to minimize the error of landmark reprojection in different observing frames. However, in visual inertial SLAM, the IMU measurement is used to add additional constraint between camera poses and speed and estimation biases from gyroscopes and accelerometers. The structure graph from original paper is shown in Fig \ref{fig:kinec} with detail labelling of different variables and constraints.\\
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{figures/okvis}
-    \caption{okvis\cite{leutenegger2015keyframe}}
-    \label{fig:kinec}
-\end{figure}
-
+    \caption{graph of variables and their relationships in visual SLAM on the left and visual intertial SLAM on the right \cite{leutenegger2015keyframe}}
+    \label{fig:okvis}
+\end{figure}\\
+In order to tightly couple the visual and inertial measurements, a joint nonlinear cost function that contains both visual reprojection error term and IMU error term is created. These both errors are eliminated by optimizing this one error function.\\
+To reduce complexity and ensuring real time operation, a fixed size temporal window of robots poses and relative states is maintained, and old robot poses will be marginalized out as new frames are inserted.\\
+In the visual frontend, a sparse map of frames and landmarks is stored. For each new frame, keypoints are extracted using SSE(Streaming SIMD Extensions)-optimized Harris corner detector and BRISK(Binary Robust Invariant Scalable Keypoints) descriptor, their 3D positions are then triangulated by stereo and put into the sparse map. During the process landmarks and keypoints are brute-forcely matched and outliers are rejected by using predicted pose from IMU data. In the optimization window, two kind of frames is maintained, first is a temporal window of the S most recent frames, second is N keyframes in the past. A frame is determined as keyframe if the number of matched points with previous frame is less than 50 to 60\%  of the number of detected keypoints.\\
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{figures/okvis1}
-    \caption{okvis\cite{leutenegger2015keyframe}}
-    \label{fig:kinec}
+    \caption{Graph of initial marginalization window \cite{leutenegger2015keyframe}}
+    \label{fig:okvis1}
 \end{figure}
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{figures/okvis2}
-     \caption{okvis\cite{leutenegger2015keyframe}}
-    \label{fig:kinec}
+     \caption{Graph for marginalization in the first case \cite{leutenegger2015keyframe}}
+    \label{fig:okvis2}
 \end{figure}
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{figures/okvis3}
-   \caption{okvis\cite{leutenegger2015keyframe}}
-    \label{fig:kinec}
+   \caption{Graph for marginalization in the second case \cite{leutenegger2015keyframe}}
+    \label{fig:okvis3}
 \end{figure}
+In the marginalization process, initially the first $N+1$ frames forms the marginalization window, as shown in Fig \ref{fig:okvis1}. When a new frame is inserted into the marginalization window, there are two ways to marginalize old state. If the oldest frame in temporal window is not a keyframe, then the state of that frame with its measurements, speed and biases will be dropped, as shown in Fig \ref{fig:okvis2}. On the other hand if it is a keyframe, landmarks that are visible in first temporal frame but in most recent keyframe is also dropped, as shown in Fig \ref{fig:okvis3}.\\
 
-Maintaining a relatively sparse graph of
-keyframes and their associated landmarks subject to nonlinear
-optimization, has since been very popular
-tightly-coupled approaches jointly estimate all sensor states.
-In order to be tractable and as an alternative to filtering,
-Dong-Si and Mourikis [2] propose a fixed-lag smoother,
-where a window of successive robot poses and related states
-is maintained, marginalizing out states (following [19]) that
-go out of scope. A similar approach, but without inertial
-terms and in the context of planetary landing is used in [16].
-With the aim of robust and accurate visual-inertial SLAM,
-we advocate tightly-coupled fusion for maximal exploitation
-of sensing cues and nonlinear estimation wherever possible
-rather than filtering in order to reduce suboptimality due
-to linearization. Our method is inspired by [17], where it
-was proposed to use IMU error terms in batch-optimized
-SLAM (albeit only during initialization). Our approach is
-Our approach is
-closely related to the fixed-lag smoother proposed in [2], as
-it combines inertial terms and reprojection error in a single
-cost function, and old states get marginalized in order to
-bound the complexity.
-In relation to these works, we see a threefold contribution:
-1) We employ the keyframe paradigm for drift-free estimation
-also when slow or no motion at all is
-present: rather than using an optimization window
-of time-successive poses, we keep keyframes that
-may be spaced arbitrarily far in time, keeping visual
-constraints—while still respecting an IMU term. Our
-formulation of relative uncertainty of keyframes allows
-for building a pose graph without expressing global
-pose uncertainty, taking inspiration from RSLAM [13].
-2) We provide a fully probabilistic derivation of IMU error
-terms, including the respective information matrix,
-relating successive image frames without explicitly
-introducing states at IMU-rate.
-3) At the system level, we developed both the hardware
-and the algorithms for accurate real-time SLAM, including
-robust keypoint matching and outlier rejection
-using inertial cues.
-In the remainder of this article, we introduce the inertial
-error term in batch visual SLAM in II-B, followed by
-an overview our real-time stereo image processing and
-keyframe selection in II-C, and the marginalization formalism
-in II-D. Finally, we show results obtained with our
-stereo-vision and IMU sensor indoor and outdoor in III.
 
-Streaming SIMD Extensions (SSE) optimised
-Harris corner detector
-brisk descriptor
-BRISK: Binary Robust Invariant Scalable Keypoints
-
-keyframe-based visual-inertial SLAM \cite{leutenegger2015keyframe}\\
 
 
 \subsubsection{Elasticfusion}
+Elasticfusion\cite{whelan2015elasticfusion} is a RGB-D dense SLAM method for 3D reconstruction, it used surfel-based map instead of occupancy grid. Instead of optimized trajectory or landmarks, it iteratively reconstruct the map to improve accuracy of the map and camera pose estimation. The optimization is done by have a deformation graph at each frame that is the same as in DynamicFusion\citep{dynamic fusion}, the graph is used to perform non-rigid surface deformation to the surfel map which will optimize the model. Also local and global loop detection is used to recover from drifts and realign the camera pose with the map. When tracking camera poses, it combine calculating poses using ICP algorithm on point cloud with matching intensities of pixels from RGB image. When manipulating point cloud, OpenGL shading language is used to update, fusion and render the view. However, while this approach has achieved great results in room scale, it may be difficult to use it on bigger or outdoor scenes.\\
+The surfel map used is similar to what is used in \citep{keller2013real}, each surfel stores information about local surface area around the center to reduce holes on the surface. The information includes position, normal, color and radius. The radius is larger as distance between image center and surfel is longer.\\
+Deformation graph is constructed for each frame for efficiency, nodes are sampled uniformly from the surfels and each node have a rotation matrix and position vector that represented optimization parameter. The neighbourhood of each node forms the edge of them.\\
+First, when tracking camera poses, geometric and photometric pose estimations are combined into a joint cost function to be minimised. geometric error is calculated using frame to model projective data association and ICP algorithm as in kiecFusion\citep{newcombe2011kinectfusion}, and photometric error is gain by the intensity difference between current RGB image and backprojected image.\\
+If the estimated camera post error is above a threshold it means drift is too far, then a global loop closure is trigged to try to realign camera pose with past frames. The past frame information is stored in a randomized fern encoding database \cite{glocker2015real}, and if a high quality matched is found, points are sampled from the image to build constraints that are used to optimize the deformation graph. If no global loop closure is found then local loop closure if detected by try to register the part of inactive model with active model within the same frame, when hight quality alignment is found similar method is used to optimize the deformation graph. The surfel map for current fram after deformation is then fused into global map using OpenGL.\\
 
-Elastic Fusion \cite{whelan2015elasticfusion}\\
 
-random ferns for keyframe encoding \cite{glocker2015real}\\
+the set of
+nodes which influence each surfel Ms must be determined.
+In tune with the method in the previous section a temporal
+association is chosen, similar to the approach taken by Whelan
+et al. [25]. The algorithm which implements I(Ms, G) and
+applies the deformation graph G to a given surfel is listed
+in Algorithm 1. When each surfel is deformed\\
 
-past present and future of SLAM \cite{cadena2016past}\\
+Our system is capable of capturing comprehensive
+dense globally consistent surfel-based maps of room scale environments
+explored using an RGB-D camera in an incremental
+online fashion, without pose graph optimisation or any postprocessing
+steps. This is accomplished by using dense frame-to model
+camera tracking and windowed surfel-based fusion coupled
+with frequent model refinement through non-rigid surface
+deformations. Our approach applies local model-to-model surface
+loop closure optimisations as often as possible to stay close to the
+mode of the map distribution, while utilising global loop closure
+to recover from arbitrary drift and maintain global consistency\\
 
-
+i) use
+photometric and geometric frame-to-model predictive tracking
+in a fused surfel-based dense map; (ii) perform dense modelto-
+model local surface loop closures with a non-rigid space
+deformation and (iii) utilise a predicted surface appearancebased
+place recognition method to resolve global surface loop
+closures and hence capture globally consistent dense surfelbased
+maps without a pose graph.
+key elements of our method.\\
+1) Estimate a fused surfel-based model of the environment.
+This component of our method is inspired by the surfel based
+fusion system of Keller et al. [9], with some
+notable differences outlined in Section III.
+2) While tracking and fusing data in the area of the
+model most recently observed (active area of the model),
+segment older parts of the map which have not been
+observed in a period of time t into the inactive area of
+the model (not used for tracking or data fusion).
+3) Every frame, attempt to register the portion of the active
+model within the current estimated camera frame with
+the portion of the inactive model underlaid within the
+same frame. If registration is successful, a loop has
+been closed to the older inactive model and the entire
+model is non-rigidly deformed into place to reflect this
+registration. The inactive portion of the map which
+caused this loop closure is then reactivated to allow
+tracking and surface fusion (including surfel culling) to
+take place between the registered areas of the map.
+4) For global loop closure, add predicted views of the
+scene to a randomised fern encoding database [6]. Each
+frame, attempt to find a matching predicted view via this
+database. If a match is detected, register the views together
+and check if the registration is globally consistent
+with the model’s geometry. If so, reflect this registration
+in the map with a non-rigid deformation, bringing the
+surface into global alignment.
 
 
 \section{Project Plan (1-2 pages)}
+The plan of this project is to start with simple sample project on Google Tango Tablet, using the Tango C API, based on exist C++ code for Okvis\cite{leutenegger2015keyframe}, to iteratively build out the solution step by step, so that milestones are available if a certain stage is unable to complete before the project deadline.\\
+In this project the goal is run ElasticFusion\citep{whelan2015elasticfusion} on Google Tango Tablet for real time 3D reconstruction, but the algorithm will be adapted to fit into the Tango platform, also to make use of the Tango motion tracking and depth perception API. Given that Tango's camera pose estimation already make use of RGB-D and IMU sensor data, the pose tracking could possibly be replaced with 3D pose gain directly from Tango. Also, camera frame and 3D point cloud data for a time point can be acquired with the API. However, although the Tango 3D Reconstruction Library C provides functions and structs reconstruct 3D suface using mesh or voxel grid, it is different than the surfel map that we will be using for ElasticFusion\citep{whelan2015elasticfusion}. However, it will be worth to study the sample project of building mesh and rendering on screen.\\
 
-You should explain what needs to be done in order to complete the project and roughly what you expect the timetable to be. Don’t forget to include the project write-up (the final report), as this is a major part of the exercise. It’s important to identify key milestones and also fall-back positions, in case you run out of time.  You should also identify what extensions could be added if time permits.  The plan should be complete and should include those parts that you have already addressed (make it clear how far you have progressed at the time of writing).  This material will not appear in the final report.\\
+Feb 3: First, we need to set up a simple demo Google Tango Android application for motion tacking that output real time pose data into the logs.\\
 
-May 19 - June 19 :Final Report
-June 26 : Preliminary Source Code Archive
-July 4 :Final Project Archive
+Feb 10: Then camera frames needed to be rendered on screen in real time with buttons to resume and pause the rendering.\\
 
+Feb 24: Next step is to make use of the mesh builder in Tango 3D Reconstruction Library for fusing point clouds and use OpenGL to render it on screen from the camera view point.\\
+
+Mar 24: After that we can build out the structs and functions for surfel map and global map representation used in ElasticFusion\cite{whelan2015elasticfusion}, in which the surfels are divided into active and inactive types according the time it is last observed.\\
+
+April 21: With the surfel map classes, integration with Tango could be done by try to extract surfels from point cloud data and then render the surfels into the screen.\\
+
+May 12: Then the structs and functions for deformation graph, its nodes and surface constraints will be built to allow for non rigid deformation of the surface.\\
+
+June 2: In order to perform the optimization using surface constraints, global and local loop closure needs to be done. For global loop closure, ElasticFusion\cite{whelan2015elasticfusion} uses randomised fern encoding database to store frame information and check for match frames. Therefore fern and frame structs and this store, lookup mechanism needs to be implemented.\\
+
+June 6: With global loop closure in place, this can be tested out by manually triggering the loop closing and see whether deformation graph is applied, which will cause the surfaces to be realigned, and camera pose be updated.\\
+
+June 16: If this is successful, local loop closure can also be done using model-to-model tracking by trying to register the active and inactive point clouds together under the current frame view point. This is done by using the same tracking and optimization process in global loop sure.\\
+
+It will be the ideal case if the above is all achieved before the project deadline, since this is a very challenging project. And if at a certain stage it is realised that it could not be done before the deadline, the progress can be fall back to the previous milestone and start clean up and report write up.\\ 
+
+However, extension and optimization could be done if more time is given and basic solution is completed. Until here the 3D reconstruction process will be running on Tango tablet's NVIDIA Tegra K1 processor without utilizing the CUDA feature on it to improve performance by parallel processing. A optimization could be to use CUDA in the camera tracking process. Also on the application side, extra features can be added such as saving the reconstructed surfel map on the Tango tablet, add an interactive view of reconstructed 3D surface map on the screen to allow for drag and zoom operation, showing the camera's current pose on the map. Further more, demo application and be built to utilising the augmented reality ability on Tango platform, such as placing a virtual static object on the 3D reconstructing surface.
+
+Mar 20 to 24 : Exams\\
+March 24 to April 29 : Easter holiday\\
+May 19 : Final Report Start\\
+June 19 : Final Report due \\
+June 26 : Preliminary Source Code Archive due\\
+July 4 : Final Project Archive\\
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{ll}
+Time                        & Event Description Due on that time                                                                                                                                                                                                                                                                                                                                   \\
+Feb 3                       & First, we need to set up a simple demo Google Tango Android application for motion tacking that output real time pose data into the logs.                                                                                                                                                                                                                            \\
+Feb 10                      & Then camera frames needed to be rendered on screen in real time with buttons to resume and pause the rendering.                                                                                                                                                                                                                                                      \\
+Feb 24                      & Next step is to make use of the mesh builder in Tango 3D Reconstruction Library for fusing point clouds and use OpenGL to render it on screen from the camera view point.                                                                                                                                                                                            \\
+Mar 20 to 24                & Exams                                                                                                                                                                                                                                                                                                                                                                \\
+Mar 24                      & After that we can build out the structs and functions for surfel map and global map representation used in ElasticFusion, in which the surfels are divided into active and inactive types according the time it is last observed.                                                                                                                                    \\
+March 24 to April 29        & Easter holiday                                                                                                                                                                                                                                                                                                                                                       \\
+April 21                    & With the surfel map classes, integration with Tango could be done by try to extract surfels from point cloud data and then render the surfels into the screen.                                                                                                                                                                                                       \\
+May 12                      & Then the structs and functions for deformation graph, its nodes and surface constraints will be built to allow for non rigid deformation of the surface.                                                                                                                                                                                                             \\
+May 19                      & Final Report Start                                                                                                                                                                                                                                                                                                                                                   \\ \cline{2-2} 
+\multicolumn{1}{l|}{June 2} & \multicolumn{1}{l|}{In order to perform the optimization using surface constraints, global and local loop closure needs to be done. For global loop closure, ElasticFusion uses randomised fern encoding database to store frame information and check for match frames. Therefore fern and frame structs and this store, lookup mechanism needs to be implemented.} \\ \cline{2-2} 
+June 6                      & June 6: With global loop closure in place, this can be tested out by manually triggering the loop closing and see whether deformation graph is applied, which will cause the surfaces to be realigned, and camera pose be updated.\\textbackslash                                                                                                                    \\
+June 16                     & If this is successful, local loop closure can also be done using model-to-model tracking by trying to register the active and inactive point clouds together under the current frame view point. This is done by using the same tracking and optimization process in global loop sure.                                                                               \\
+June 19                     & Final Report Due                                                                                                                                                                                                                                                                                                                                                     \\
+June 25                     & Source code clean up, commenting and refactoring                                                                                                                                                                                                                                                                                                                     \\
+June 26                     & preliminary Source Code Archive Due                                                                                                                                                                                                                                                                                                                                  \\
+July 4                      & Final Project Archive                                                                                                                                                                                                                                                                                                                                                \\
+                            &                                                                                                                                                                                                                                                                                                                                                                      \\
+                            &                                                                                                                                                                                                                                                                                                                                                                     
+\end{tabular}
+\end{table}
 
 \section{Evaluation plan (1-2 pages)}
 
