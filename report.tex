@@ -168,8 +168,45 @@ The project timeline is shown in Fig \ref{fig:tiemline2} with each task correspo
 
 \section{Evaluation plan (1-2 pages)}
 
---\\
-Project evaluation is very important, so it's important to think now about how you plan to measure success. For example, what functionality do you need to demonstrate?  What experiments to you need to undertake and what outcome(s) would constitute success?  What benchmarks should you use? How has your project extended the state of the art?  How do you measure qualitative aspects, such as ease of use?  These are the sort of questions that your project evaluation should address; this section should outline your plan.\\
+We evaluate the performance of our system both quantitatively
+and qualitatively in terms of trajectory estimation, surface
+reconstruction accuracy and computational performance.
+A. Trajectory Estimation
+To evaluate the trajectory estimation performance of our approach
+we test our system on the RGB-D benchmark of Sturm
+et al. [22]. This benchmark provides synchronised ground truth
+poses for an RGB-D sensor moved through a scene, captured
+with a highly precise motion capture system. In Table I we
+compare our system to four other state-of-the-art RGB-D
+based SLAM systems; DVO SLAM [10], RGB-D SLAM [5],
+MRSMap [21] and Kintinuous [25]. We also provide benchmark
+scores for our system if all deformations are disabled
+and only frame-to-model tracking is used. We use the absolute
+trajectory (ATE) root-mean-square error metric (RMSE) in
+our comparison, which measures the root-mean-square of the
+Euclidean distances between all estimated camera poses and
+the ground truth poses associated by timestamp [22]. These
+results show that our trajectory estimation performance is on
+par with or better than existing state-of-the-art systems tha
+rely on a pose graph optimisation backend. Interestingly our
+frame-to-model only results are also comparable in performance,
+whereas a uniform increase in accuracy is achieved
+when active to inactive model deformations are used, proving
+their efficacy in trajectory estimation. Only on fr3/nst does
+a global loop closure occur. Enabling local loops alone on
+this dataset results in an error of 0.022m, while only enabling
+global loops results in an error of 0.023m.
+B. Surface Estimation
+We evaluate the surface reconstruction results of our approach
+on the ICL-NUIM dataset of Handa et al. [7]. This
+benchmark provides ground truth poses for a camera moved
+through a synthetic environment as well as a ground truth 3D
+model which can be used to evaluate surface reconstruction
+accuracy. We evaluate our approach on all four trajectories in
+the living room scene (including synthetic noise) providing
+surface reconstruction accuracy results in comparison to the
+same SLAM systems listed in Section VII-A. We also include
+trajectory estimation results for each dataset. Tables II and II
 
 
 \bibliographystyle{unsrt}

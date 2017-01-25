@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.10.24)  25 JAN 2017 17:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.10.24)  25 JAN 2017 17:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1525,11 +1525,6 @@ Package pdftex.def Info: figures/timeline2.png used on input line 162.
 
 LaTeX Warning: Float too large for page by 23.60356pt on input line 165.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 171--173
-
- []
-
 (./report.bbl (./report.brf)
 \tf@brf=\write7
 \openout7 = `report.brf'.
@@ -1539,22 +1534,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 171--173
 \openout8 = `report.thm'.
 
  [15]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 178.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 178.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 215.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 215.
 
 (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 178.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 178.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 215.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 215.
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: C8C159A898E38AA5300E3C551ECBE4CA;776.
-
-
-Package rerunfilecheck Warning: File `report.brf' has changed.
-(rerunfilecheck)                Rerun to get bibliographical references right.
-
-Package rerunfilecheck Info: Checksums for `report.brf':
-(rerunfilecheck)             Before: 15B29E2C73CB558DBDDD90DE684CFDB3;1642
-(rerunfilecheck)             After:  C4D5D67D2CABF66D6D4E8AF2E87787AB;1642.
+Package rerunfilecheck Info: File `report.brf' has not changed.
+(rerunfilecheck)             Checksum: C4D5D67D2CABF66D6D4E8AF2E87787AB;1642.
  ) 
 Here is how much of TeX's memory you used:
  23186 strings out of 494353
@@ -1563,7 +1552,7 @@ Here is how much of TeX's memory you used:
  25936 multiletter control sequences out of 15000+600000
  62568 words of font info for 117 fonts, out of 8000000 for 9000
  452 hyphenation exceptions out of 8191
- 64i,11n,77p,1584b,486s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 64i,11n,77p,1584b,468s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fon
@@ -1572,7 +1561,7 @@ ts/type1/bitstrea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/kpfon
 ts/jkpmi.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/kpfonts/jkpmn8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/kpfonts/jkpsy.pfb>
-Output written on report.pdf (15 pages, 1098233 bytes).
+Output written on report.pdf (15 pages, 1099384 bytes).
 PDF statistics:
  275 PDF objects out of 1000 (max. 8388607)
  213 compressed objects within 3 object streams
