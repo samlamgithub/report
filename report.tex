@@ -167,46 +167,10 @@ The project timeline is shown in Fig \ref{fig:tiemline2} with each task correspo
 \newpage
 
 \section{Evaluation plan (1-2 pages)}
-
-We evaluate the performance of our system both quantitatively
-and qualitatively in terms of trajectory estimation, surface
-reconstruction accuracy and computational performance.
-A. Trajectory Estimation
-To evaluate the trajectory estimation performance of our approach
-we test our system on the RGB-D benchmark of Sturm
-et al. [22]. This benchmark provides synchronised ground truth
-poses for an RGB-D sensor moved through a scene, captured
-with a highly precise motion capture system. In Table I we
-compare our system to four other state-of-the-art RGB-D
-based SLAM systems; DVO SLAM [10], RGB-D SLAM [5],
-MRSMap [21] and Kintinuous [25]. We also provide benchmark
-scores for our system if all deformations are disabled
-and only frame-to-model tracking is used. We use the absolute
-trajectory (ATE) root-mean-square error metric (RMSE) in
-our comparison, which measures the root-mean-square of the
-Euclidean distances between all estimated camera poses and
-the ground truth poses associated by timestamp [22]. These
-results show that our trajectory estimation performance is on
-par with or better than existing state-of-the-art systems tha
-rely on a pose graph optimisation backend. Interestingly our
-frame-to-model only results are also comparable in performance,
-whereas a uniform increase in accuracy is achieved
-when active to inactive model deformations are used, proving
-their efficacy in trajectory estimation. Only on fr3/nst does
-a global loop closure occur. Enabling local loops alone on
-this dataset results in an error of 0.022m, while only enabling
-global loops results in an error of 0.023m.
-B. Surface Estimation
-We evaluate the surface reconstruction results of our approach
-on the ICL-NUIM dataset of Handa et al. [7]. This
-benchmark provides ground truth poses for a camera moved
-through a synthetic environment as well as a ground truth 3D
-model which can be used to evaluate surface reconstruction
-accuracy. We evaluate our approach on all four trajectories in
-the living room scene (including synthetic noise) providing
-surface reconstruction accuracy results in comparison to the
-same SLAM systems listed in Section VII-A. We also include
-trajectory estimation results for each dataset. Tables II and II
+​The evaluation of this project is intended to use the same mechanism as in original ElasticFusion\citep{whelan2015elasticfusion} paper, as the goal of this project is to deploying this algorithm on Google Tango tablet.\\
+In order to measure the performance of this solution by quantity and quality. Both algorithm and computational performance need to be benchmarked.\\
+For the algorithm, trajectory accuracy can be tested using sample data sets to provide RGB-D input, then the trajectory output can be compared with the ground truth data that is obtained by using industrial standard system. The root mean square distance between every estimated pose and ground truth pose can be calculated to provide error at each timepoint. In the 3D reconstruction part, similar method can be used to compare the reconstructed surface to benchmark data for accuracy estimation. However, since the post data and image input are provided by Tango platform, a way is needed to fed the benchmark data into Tango.\\
+For computational Performance, we can simply plot the frame rate during the process of 3D scanning to check if it is within the acceptable range for real time SLAM algorithm.
 
 
 \bibliographystyle{unsrt}
