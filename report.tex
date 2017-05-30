@@ -130,7 +130,7 @@ In the marginalization process, initially the first $N+1$ frames forms the margi
 
 
 \subsubsection{Elasticfusion}
-Elasticfusion\cite{whelan2015elasticfusion} is a RGB-D dense SLAM method for 3D reconstruction in room scale without using pose graph , it also use surfels to represent the map instead of occupancy grid. In the scanning process, it iteratively check for local and global loop closures and refine the map by using a deformation graph to apply non rigid deformation to the surface. However, while this approach has achieved great results in room scale, it may be difficult to use it on bigger or outdoor scenes.\\
+Elasticfusion\cite{whelan2015elasticfusion} is a RGB-D dense SLAM method for 3D reconstruction in room scale without using pose graph , it also use surfels to represent the map instead of voxel grid. In the scanning process, it iteratively check for local and global loop closures and refine the map by using a deformation graph to apply non rigid deformation to the surface. However, while this approach has achieved great results in room scale, it may be difficult to use it on bigger or outdoor scenes.\\
 In the surfel map, each surfel stores information about local surface area around the center to reduce holes on the surface, these information includes position, normal, color and radius. The radius is larger as distance between image center and surfel is longer. The surfels are extracted from point cloud using the same method as in \citep{keller2013real}. But differently, in here the surfels are divided into active and inactive parts. Inactive parts are the surfels that have not been observed for a given time period. OpenGL shading language is used to manage the surfel map and update, fusion and render the view. \\
 First, in camera pose tracking step, dense frame-to model camera tracking is used, geometric and photometric pose estimations are combined into a joint cost function to be minimised. geometric error is calculated using frame to model projective data association and ICP algorithm as in kinecFusion\citep{newcombe2011kinectfusion}, and photometric error is gain by calculating the intensity difference between current RGB image and backprojected image. Noted that here in the tracking process only active surfels are used.\\
 The realignment of map is done by applying non rigid deformation using deformation graph, it is constructed for each frame for efficiency with nodes sampled uniformly from the surfels which is same as in DynamicFusion\citep{newcombe2015dynamicfusion}. Each node have a rotation matrix and position vector that represents optimization parameter and neighbourhood of each node forms the edge of them. Each surfel has a set of influencing nodes that affects the deformation of that surfel.\\
@@ -167,6 +167,7 @@ The project timeline is shown in Fig \ref{fig:tiemline2} with each task correspo
 \newpage
 
 \section{Evaluation plan (1-2 pages)}
+
 The evaluation of this project is intended to use the same mechanism as in original ElasticFusion\citep{whelan2015elasticfusion} paper, as the goal of this project is to deploying this algorithm on Google Tango tablet.\\
 In order to measure the performance of this solution by quantity and quality. Both algorithm and computational performance need to be benchmarked.\\
 Both 
@@ -192,6 +193,13 @@ model which can be used to evaluate surface reconstruction
 accuracy. 
 
 Computational Performance
+
+
+​The evaluation of this project is intended to use the same mechanism as in original ElasticFusion\citep{whelan2015elasticfusion} paper, as the goal of this project is to deploying this algorithm on Google Tango tablet.\\
+In order to measure the performance of this solution by quantity and quality. Both algorithm and computational performance need to be benchmarked.\\
+For the algorithm, trajectory accuracy can be tested using sample data sets to provide RGB-D input, then the trajectory output can be compared with the ground truth data that is obtained by using industrial standard system. The root mean square distance between every estimated pose and ground truth pose can be calculated to provide error at each timepoint. In the 3D reconstruction part, similar method can be used to compare the reconstructed surface to benchmark data for accuracy estimation. However, since the post data and image input are provided by Tango platform, a way is needed to fed the benchmark data into Tango.\\
+For computational Performance, we can simply plot the frame rate during the process of 3D scanning to check if it is within the acceptable range for real time SLAM algorithm.
+
 
 
 \bibliographystyle{unsrt}
